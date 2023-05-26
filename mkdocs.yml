@@ -1,0 +1,30 @@
+site_name: sosecrets Documentation
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Getting Started: get-started.md
+  - Examples: examples.md
+  - API Reference: api.md
+  
+theme:
+  name: material
+  palette: 
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: pink
+      accent: pink
+      toggle:
+        icon: material/lightbulb-outline
+        name: "Switch to dark mode"
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: pink
+      accent: pink
+      toggle:
+        icon: material/lightbulb
+        name: "Switch to light mode"
+
+  favicon: path/to/favicon.ico
+
+plugins:
+  - mkdocstrings
