@@ -112,3 +112,18 @@ def test_expose_secret_cannot_be_initialized():
 def test_calling_from_class_raises(secret_one):
     with pytest.raises(TypeError):
         __inner_secret__.expose_secret(secret_one)
+        
+
+def test_will_not_mixed_up():
+    a = Secret("Hello"); b = Secret("Bye")
+    assert a.expose_secret(), b.expose_secret() == ('Hello', 'Bye')
+
+
+def test_cannot_access_secret_from_class(secret_one):
+    with pytest.raises(AttributeError):
+        Secret.expose_secret(secret_one)
+    
+    
+def test_secret_cannot_be_found_in_globals(secret_one):
+    for k, v in secret_one.expose_secret.__globals__.items():
+        assert secret_one != v

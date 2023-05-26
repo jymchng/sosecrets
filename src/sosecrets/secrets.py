@@ -48,6 +48,7 @@ class SecretMeta(type):
     def __instancecheck__(self, inst):
         return isinstance(inst, __inner_secret__)
 
+from types import MappingProxyType
 
 class Secret(metaclass=SecretMeta):
 

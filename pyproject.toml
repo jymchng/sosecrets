@@ -35,7 +35,7 @@ push = true
     'version = "{version}"'
 ]
 
-"src/landuo/__init__.py" = [
+"src/sosecrets/__init__.py" = [
     'version = "{version}"'
 ]
 
