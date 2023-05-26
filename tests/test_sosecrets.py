@@ -1,6 +1,6 @@
 import pytest
 from src.sosecrets import Secret
-from src.sosecrets.secrets import __expose_secret__, __inner_secret__
+from src.sosecrets.secrets import __expose_secret__
 from src.sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
 
 
@@ -57,11 +57,13 @@ def test_inspection_does_not_reveal_secret(secret_one):
     exposed_secret = secret_one.expose_secret()
     members_inspection = inspect.getmembers(secret_one)
 
-    with pytest.raises(AttributeError):
-        secret_one.__dict__
-
     for name, value in members_inspection:
         assert secret_one.expose_secret() != name and secret_one.expose_secret() != value
+
+
+def test_secret_has_no_namespace(secret_one):
+    with pytest.raises(AttributeError):
+        secret_one.__dict__
 
 
 def test_initialization_with_func(secret_two):
@@ -111,19 +113,25 @@ def test_expose_secret_cannot_be_initialized():
 
 def test_calling_from_class_raises(secret_one):
     with pytest.raises(TypeError):
-        __inner_secret__.expose_secret(secret_one)
-        
+        Secret.expose_secret(secret_one)
+
 
 def test_will_not_mixed_up():
-    a = Secret("Hello"); b = Secret("Bye")
+    a = Secret("Hello")
+    b = Secret("Bye")
     assert a.expose_secret(), b.expose_secret() == ('Hello', 'Bye')
 
 
-def test_cannot_access_secret_from_class(secret_one):
-    with pytest.raises(AttributeError):
-        Secret.expose_secret(secret_one)
-    
-    
 def test_secret_cannot_be_found_in_globals(secret_one):
     for k, v in secret_one.expose_secret.__globals__.items():
         assert secret_one != v
+
+
+def test_context_manager(secret_one):
+    with secret_one as secret:
+        assert secret_one.expose_secret() == secret
+
+
+def test_cannot_assign_new_attrs_to_secret(secret_one):
+    with pytest.raises(AttributeError):
+        secret_one.hello = 2

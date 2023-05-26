@@ -1,19 +1,6 @@
 from types import MethodType
 from src.sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
-from src.sosecrets.typed import SecretType
-
-
-class __inner_secret__:
-    __slots__ = ('expose_secret')
-
-    def apply(self, func, *args, **kwargs):
-        return Secret(func(self.expose_secret(), *args, **kwargs))
-
-    def __enter__(self):
-        return self.expose_secret()
-
-    def __exit__(self, exc_type, exc_value, exc_tb):
-        ...
+from src.sosecrets.typed import SecretType, T, Generic, Callable, Any, Tuple, Dict, Optional
 
 
 class __expose_secret__:
@@ -21,7 +8,15 @@ class __expose_secret__:
     def __init__(self):
         raise CannotInstantiateExposeSecret
 
-    def __call__(self, value, /, func=None, func_args=(), func_kwargs={}):
+    def __call__(self,
+                 value: Optional[T] = None,
+                 /,
+                 func: Optional[Callable[[Any],
+                                T]] = None,
+                 func_args: Tuple[Any] = tuple(),
+                 func_kwargs: Dict[str,
+                                   Any] = dict()):
+
         if func is not None and value is not None:
             raise FuncAndValueCannotBeBothPassed
         if func is not None:
@@ -33,8 +28,16 @@ class __expose_secret__:
 
 
 class SecretMeta(type):
-    def __call__(cls, value=None, /, func=None, func_args=(), func_kwargs={}):
-        obj = object.__new__(__inner_secret__)
+    def __call__(cls,
+                 value: Optional[T] = None,
+                 /,
+                 func: Optional[Callable[[Any],
+                                T]] = None,
+                 func_args: Tuple[Any] = tuple(),
+                 func_kwargs: Dict[str,
+                                   Any] = dict()):
+
+        obj = object.__new__(Secret)
         new_func_obj = object.__new__(__expose_secret__)
         obj.expose_secret = MethodType(
             new_func_obj(
@@ -45,12 +48,20 @@ class SecretMeta(type):
             obj)
         return obj
 
-    def __instancecheck__(self, inst):
-        return isinstance(inst, __inner_secret__)
 
-from types import MappingProxyType
+class Secret(Generic[T], metaclass=SecretMeta):
 
-class Secret(metaclass=SecretMeta):
+    __slots__ = ('expose_secret')
 
-    def __init_subclass__(cls, **init_sc_kwargs):
+    def apply(self, func: Callable[[Any], Any],
+              *args: Tuple[Any], **kwargs: Dict[str, Any]) -> SecretType:
+        return Secret(func(self.expose_secret(), *args, **kwargs))
+
+    def __enter__(self) -> T:
+        return self.expose_secret()
+
+    def __exit__(self, exc_type, exc_value, exc_tb) -> None:
+        ...
+
+    def __init_subclass__(cls, **init_sc_kwargs) -> None:
         raise CannotInheritFromSecret
