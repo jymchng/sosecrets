@@ -1,7 +1,7 @@
 import pytest
-from src.sosecrets import Secret
-from src.sosecrets.secrets import __expose_secret__
-from src.sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
+from sosecrets import Secret
+from sosecrets.secrets import __expose_secret__
+from sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
 
 
 def generate_secret():

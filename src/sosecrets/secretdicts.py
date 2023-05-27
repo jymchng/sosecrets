@@ -1,4 +1,4 @@
-from src.sosecrets.secrets import Secret, Dict, Any, Optional, Callable, Generic, T, Tuple
+from sosecrets.secrets import Secret, Dict, Any, Optional, Callable, Generic, T, Tuple
 
 
 class ImmutableSecretMapping(dict, Dict[Any, Secret]):

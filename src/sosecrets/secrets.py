@@ -1,5 +1,5 @@
 from types import MethodType
-from src.sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
+from sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
 from typing import Generic, Callable, Any, Tuple, Dict, Optional, TypeVar
 
 

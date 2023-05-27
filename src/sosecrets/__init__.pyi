@@ -1,1 +1,1 @@
-from src.sosecrets.sosecrets import Secret
+from sosecrets.sosecrets import Secret

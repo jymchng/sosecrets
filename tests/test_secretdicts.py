@@ -1,8 +1,8 @@
 import pytest
 from typing import Dict
 from secrets import token_hex
-from src.sosecrets.secretdicts import ImmutableSecretMapping, MutableSecretMapping
-from src.sosecrets.secrets import Secret
+from sosecrets.secretdicts import ImmutableSecretMapping, MutableSecretMapping
+from sosecrets.secrets import Secret
 
 
 # Helper function to create a dictionary with random secret values
