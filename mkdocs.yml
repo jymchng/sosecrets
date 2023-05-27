@@ -3,8 +3,12 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - Getting Started: get-started.md
-  - Examples: examples.md
-  - API Reference: api.md
+  - Examples:
+    - Simple Example: examples/simple-example.md
+    - Environment Management: examples/python-dotenv.md
+  - APIs:
+    - Secret: APIs/secret.md
+    - Secret Mapping: APIs/secretmappings.md
   
 theme:
   name: material

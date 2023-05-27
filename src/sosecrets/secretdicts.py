@@ -1,23 +1,23 @@
-from src.sosecrets.secrets import Secret, Dict, Any, Optional
+from src.sosecrets.secrets import Secret, Dict, Any, Optional, Callable, Generic, T, Tuple
 
 
 class ImmutableSecretMapping(dict, Dict[Any, Secret]):
     """
     A dictionary-like object that stores secret values and prevents changes to the dictionary.
     """
-    def __new__(cls, mapping: Dict[Any, Any]):
+    def __new__(cls, mapping: Dict[Any, Any]) -> 'ImmutableSecretMapping':
         """
-        Initialize the ImmutableSecretMapping object.
+        Initialize a new ImmutableSecretMapping object.
 
-        Parameters:
-        - mapping (Dict[Any, Any]): A dictionary with `Any` keys and secret values.
+        Args:
+            mapping (Dict[Any, Any]): A dictionary with `Any` keys and `Any` values.
 
-       Raises:
-        - Exception: If the mapping argument is empty or if any of the values in the mapping are not of type Secret.
+        Raises:
+            ValueError: If the mapping argument is empty.
         """
         if not mapping:
             raise ValueError("Mapping argument is empty.")
-        new_mapping = {}
+        new_mapping: Dict[Any, Any] = {}
         for k, v in mapping.items():
             if not isinstance(v, Secret):
                 new_mapping[k] = Secret(v)
@@ -30,11 +30,11 @@ class ImmutableSecretMapping(dict, Dict[Any, Secret]):
         Raise an exception when attempting to set a new key-value pair in the `ImmutableSecretMapping` object.
 
         Parameters:
-        - key (Any): The key to set.
-        - value (Any): The value to set.
+            key (Any): The key to set.
+            value (Any): The value to set.
 
         Raises:
-        - Exception: When attempting to set a new key-value pair.
+            Exception: When attempting to set a new key-value pair.
         """
         raise TypeError(
             "ImmutableSecretMapping object does not support item assignment.")
@@ -42,22 +42,22 @@ class ImmutableSecretMapping(dict, Dict[Any, Secret]):
     @classmethod
     def from_func(
             cls,
-            func,
-            *func_args,
-            **func_kwargs) -> 'ImmutableSecretMapping':
-        """
-        Create a new ImmutableSecretMapping object from the result of a function.
+            func: Callable[[Any], Dict[Any, Any]],
+            *func_args: Tuple[Any],
+            **func_kwargs: Dict[Any, Any]) -> 'ImmutableSecretMapping':
+        """Create a new ImmutableSecretMapping object from the result of a function.
 
-        Parameters:
-        - func (callable): A function that returns a dictionary with Anying keys and secret values.
-        - *func_args (Any): Positional arguments to pass to the function.
-        - **func_kwargs (Any): Keyword arguments to pass to the function.
+        Args:
+            func (callable): A function that returns a dictionary with `Any` keys and secret values.
+            *func_args (Any): Positional arguments to pass to the function.
+            **func_kwargs (Any): Keyword arguments to pass to the function.
 
         Returns:
-        - ImmutableSecretMapping: A new ImmutableSecretMapping object.
+            ImmutableSecretMapping: A new ImmutableSecretMapping object.
 
-       Raises:
-        - ValueError: If the result of the function is empty or if any of the values in the result are not of type Secret.
+        Raises:
+            ValueError: If the result of the function is empty.
+            TypeError: If any of the values in the result are not of type Secret.
         """
         mapping = func(*func_args, **func_kwargs)
         if not mapping:
@@ -71,16 +71,14 @@ class ImmutableSecretMapping(dict, Dict[Any, Secret]):
         return cls(new_mapping)
 
     def get_exposed(self, key: Any, default: Optional[Any] = None) -> Any:
-        """
-        Get the exposed value of a key in the ImmutableSecretMapping object.
+        """Get the exposed value of a key in the ImmutableSecretMapping object.
 
-        Parameters:
-        - key (Any): The key to get.
-        - default (Optional[Any]): The default value to return if the key is not found.
+        Args:
+            key (Any): The key to get.
+            default (Optional[Any]): The default value to return if the key is not found.
 
         Returns:
-        - Any: The exposed value of the key, or the default value if the key is not found.
-        """
+            Any: The exposed value of the key, or the default value if the key is not found."""
         value = super().get(key, default)
         if value == default:
             return value
@@ -93,7 +91,7 @@ class ImmutableSecretMapping(dict, Dict[Any, Secret]):
         This method returns a new dictionary with the same keys as the original dictionary, but with values that have been converted to non-sensitive information using their `expose_secret()` method. The `expose_secret()` method is expected to return a non-sensitive version of the value, so that the dictionary can be safely exported or displayed without exposing sensitive information.
 
         Returns:
-            A new dictionary with non-sensitive values.
+            Dict[Any, Any]: A new dictionary with non-sensitive values.
         """
         return {k: v.expose_secret() for k, v in super().items()}
 
@@ -104,13 +102,13 @@ class MutableSecretMapping(dict):
     """
     def __new__(cls, mapping: Dict[Any, Any]):
         """
-        Initialize the MutableSecretMapping object.
+        Initialize a new MutableSecretMapping object.
 
-        Parameters:
-        - mapping (Dict[Any, Any]): A dictionary with Any keys and secret values.
+        Args:
+            mapping (Dict[Any, Any]): A dictionary with `Any` keys and `Any` values.
 
         Raises:
-        - ValueError: If the mapping argument is empty or if any of the values in the mapping are not of type Secret.
+            ValueError: If the mapping argument is empty.
         """
         if not mapping:
             raise ValueError("Mapping argument is empty.")
@@ -127,11 +125,11 @@ class MutableSecretMapping(dict):
         Set a new key-value pair in the MutableSecretMapping object.
 
         Parameters:
-        - key (Any): The key to set.
-        - value (Any): The value to set.
+            key (Any): The key to set.
+            value (Any): The value to set.
 
         Raises:
-        - ValueError: If the value is not of type Secret.
+            ValueError: If the value is not of type Secret.
         """
         if not isinstance(value, Secret):
             raise ValueError("Value must be of type Secret.")
@@ -140,22 +138,22 @@ class MutableSecretMapping(dict):
     @classmethod
     def from_func(
             cls,
-            func,
-            *func_args,
-            **func_kwargs) -> 'MutableSecretMapping':
-        """
-        Create a new MutableSecretMapping object from the result of a function.
+            func: Callable[[Any], Dict[Any, Any]],
+            *func_args: Tuple[Any],
+            **func_kwargs: Dict[Any, Any]) -> 'MutableSecretMapping':
+        """Create a new MutableSecretMapping object from the result of a function.
 
-        Parameters:
-        - func (callable): A function that returns a dictionary with `Any` keys and secret values.
-        - *func_args (Any): Positional arguments to pass to the function.
-        - **func_kwargs (Any): Keyword arguments to pass to the function.
+        Args:
+            func (callable): A function that returns a dictionary with `Any` keys and secret values.
+            *func_args (Any): Positional arguments to pass to the function.
+            **func_kwargs (Any): Keyword arguments to pass to the function.
 
         Returns:
-        - MutableSecretMapping: A new MutableSecretMapping object.
+            MutableSecretMapping: A new MutableSecretMapping object.
 
         Raises:
-        - ValueError: If the result of the function is empty or if any of the values in the result are not of type Secret.
+            ValueError: If the result of the function is empty.
+            TypeError: If any of the values in the result are not of type Secret.
         """
         mapping = func(*func_args, **func_kwargs)
         if not mapping:
@@ -172,12 +170,12 @@ class MutableSecretMapping(dict):
         """
         Get the exposed value of a key in the MutableSecretMapping object.
 
-        Parameters:
-        - key (Any): The key to get.
-        - default (Optional[Any]): The default value to return if the key is not found.
+        Args:
+            key (Any): The key to get.
+            default (Optional[Any]): The default value to return if the key is not found.
 
         Returns:
-        - Any: The exposed value of the key, or the default value if the key is not found.
+            Any: The exposed value of the key, or the default value if the key is not found.
         """
         return super().get(key, default).expose_secret()
 
@@ -188,6 +186,6 @@ class MutableSecretMapping(dict):
         This method returns a new dictionary with the same keys as the original dictionary, but with values that have been converted to non-sensitive information using their `expose_secret()` method. The `expose_secret()` method is expected to return a non-sensitive version of the value, so that the dictionary can be safely exported or displayed without exposing sensitive information.
 
         Returns:
-            A new dictionary with non-sensitive values.
+            Dict[Any, Any]: A new dictionary with non-sensitive values.
         """
         return {k: v.expose_secret() for k, v in super().items()}

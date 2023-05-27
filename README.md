@@ -2,7 +2,7 @@
 
 `sosecrets` is a Python module that provides a secure way to handle sensitive data by encapsulating it and only exposing it through a controlled interface.
 
-Version: 0.1.1
+Version: 0.1.2
 
 ## Installation
 
