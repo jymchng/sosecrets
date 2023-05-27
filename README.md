@@ -2,7 +2,7 @@
 
 `sosecrets` is a Python module that provides a secure way to handle sensitive data by encapsulating it and only exposing it through a controlled interface.
 
-Version: 0.1.0
+Version: 0.1.1
 
 ## Installation
 
@@ -36,6 +36,8 @@ print(value)  # Output: "my secret value"
 ```
 
 In this example, we create a `Secret` object with the value "my secret value". We then use the `apply` method to apply the `len` function to the secret value while keeping it encapsulated. Finally, we use the `expose_secret` method to retrieve the value of the secret.
+
+### ImmutableSecretMapping
 
 Here's an example of how to use `ImmutableSecretMapping`:
 
