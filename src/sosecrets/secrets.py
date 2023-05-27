@@ -1,6 +1,9 @@
 from types import MethodType
 from src.sosecrets.exceptions import CannotInheritFromSecret, FuncAndValueCannotBeBothPassed, CannotInstantiateExposeSecret
-from src.sosecrets.typed import SecretType, T, Generic, Callable, Any, Tuple, Dict, Optional
+from typing import Generic, Callable, Any, Tuple, Dict, Optional, TypeVar
+
+
+T = TypeVar('T', covariant=True)
 
 
 class __expose_secret__:
@@ -11,10 +14,6 @@ class __expose_secret__:
     """
 
     def __init__(self):
-        """
-        Raises:
-            CannotInstantiateExposeSecret: This class cannot be instantiated directly.
-        """
         raise CannotInstantiateExposeSecret
 
     def __call__(self,
@@ -24,21 +23,6 @@ class __expose_secret__:
                                 T]] = None,
                  func_args: Tuple[Any] = (),
                  func_kwargs: Dict[str, Any] = {}):
-        """
-        Returns a function that returns the secret value.
-
-        Args:
-            value: The secret value to encapsulate.
-            func: A function to generate the secret value.
-            func_args: The positional arguments to pass to the `func` function.
-            func_kwargs: The keyword arguments to pass to the `func` function.
-
-        Raises:
-            FuncAndValueCannotBeBothPassed: Both `value` and `func`arguments cannot be passed at the same time.
-
-        Returns:
-            A function that returns the secret value.
-        """
 
         if func is not None and value is not None:
             raise FuncAndValueCannotBeBothPassed
@@ -71,18 +55,6 @@ class SecretMeta(type):
                                 T]] = None,
                  func_args: Tuple[Any] = (),
                  func_kwargs: Dict[str, Any] = {}) -> 'Secret':
-        """
-        Creates a new `Secret` object with the specified value or function.
-
-        Args:
-            value: The secret value to encapsulate.
-            func: A function to generate the secret value.
-            func_args: The positional arguments to pass to the `func` function.
-            func_kwargs: The keyword arguments to pass to the `func` function.
-
-        Returns:
-            A new `Secret` object with thespecified value or function.
-        """
         obj = object.__new__(Secret)
         new_func_obj = object.__new__(__expose_secret__)
         obj.expose_secret = MethodType(
@@ -98,15 +70,12 @@ class SecretMeta(type):
 class Secret(Generic[T], metaclass=SecretMeta):
     """
     A class that encapsulates a secret value and provides a controlled interface for accessing it.
-
-    This class provides the `apply` method to apply a function to the secret value while keeping it encapsulated. It also
-    provides the `__enter__` and `__exit__` methods to support the use of `Secret` objects as context managers.
     """
 
     __slots__ = ('expose_secret',)
 
     def apply(self, func: Callable[[T, Any], Any],
-              *args: Tuple[Any], **kwargs: Dict[str, Any]) -> SecretType:
+              *args: Tuple[Any], **kwargs: Dict[str, Any]) -> 'Secret':
         """
         Applies a function to the secret value while keeping it encapsulated.
 
@@ -121,31 +90,10 @@ class Secret(Generic[T], metaclass=SecretMeta):
         return Secret(func(self.expose_secret(), *args, **kwargs))
 
     def __enter__(self) -> T:
-        """
-        Returns the value of the secret.
-
-        This method allows `Secret` objects to be used as context managers.
-
-        Returns:
-            The value of the secret.
-        """
         return self.expose_secret()
 
     def __exit__(self, exc_type, exc_value, exc_tb) -> None:
-        """
-        Placeholder method for use of `Secret` objects as context managers.
-
-        This method is currently not used and simply returns `None`.
-
-        Args:
-            exc_type: The type of the exception (if any) that was raised.
-            exc_value: The value of the exception (if any) that was raised.
-            exc_tb: The traceback of the exception (if any) that was raised.
-        """
         return None
 
     def __init_subclass__(cls, **init_sc_kwargs) -> None:
-        """
-        Raises an exception to prevent subclassing of the `Secret` class.
-        """
         raise CannotInheritFromSecret
