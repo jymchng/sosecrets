@@ -177,7 +177,10 @@ class MutableSecretMapping(dict):
         Returns:
             Any: The exposed value of the key, or the default value if the key is not found.
         """
-        return super().get(key, default).expose_secret()
+        value = super().get(key, default)
+        if value == default:
+            return value
+        return value.expose_secret()
 
     def expose_dict(self) -> Dict[Any, Any]:
         """
