@@ -6,9 +6,11 @@ authors = ["Jim Chng <jimchng@outlook.com>"]
 license = "MIT"
 readme = "README.md"
 keywords = ["secrets", "security"]
+build = 'src/sosecrets/build.py'
 
 [tool.poetry.dependencies]
 python = "^3.8"
+setuptools = "^67.8.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
@@ -18,8 +20,9 @@ pytest = "^7.3.1"
 cryptography = "^40.0.2"
 python-dotenv = "^1.0.0"
 
+
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core", "cython"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.bumpver]
