@@ -36,5 +36,3 @@ class Secret(Generic[T]):
             A new `Secret` object encapsulating the result of applying `func` to the secret value.
         """
         ...
-        
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
