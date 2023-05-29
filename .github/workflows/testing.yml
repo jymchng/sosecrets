@@ -31,6 +31,7 @@ jobs:
         run: |
           pip install pytest
           pip install poetry
+          pip install sosecrets-core
           poetry build
 
       - name: Run tests
