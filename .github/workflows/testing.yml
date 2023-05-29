@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  test-local-build:
+  testing:
     continue-on-error: True
     strategy:
       matrix:
@@ -57,9 +57,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install cython
           pip install pytest
-          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple sosecrets-core
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple sosecrets
           
       - name: Run tests
         run: |
@@ -86,9 +85,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install cython
           pip install pytest
-          pip install sosecrets-core
+          pip install sosecrets
           
       - name: Run tests
         run: |
