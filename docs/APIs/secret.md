@@ -1,1 +1,1 @@
-::: src.sosecrets.sosecrets
+::: src.sosecrets.secrets

@@ -1,14 +1,17 @@
 [tool.poetry]
 name = "sosecrets"
-version = "0.1.4"
+version = "0.1.6"
 description = "Simple wrapper to secure your secrets."
 authors = ["Jim Chng <jimchng@outlook.com>"]
 license = "MIT"
 readme = "README.md"
 keywords = ["secrets", "security"]
+include = ["src/sosecrets/py.typed", "src/sosecrets/secrets.pyi"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+sosecrets-core = "^1.0.4"
+
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
@@ -18,12 +21,13 @@ pytest = "^7.3.1"
 cryptography = "^40.0.2"
 python-dotenv = "^1.0.0"
 
+
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.bumpver]
-current_version = "0.1.4"
+current_version = "0.1.6"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
