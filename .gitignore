@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 
 linkedinpost.md
+scripts/dev/*
+stackoverflowqn.md
