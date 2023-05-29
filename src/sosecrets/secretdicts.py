@@ -1,4 +1,4 @@
-from .secrets import Secret
+from sosecrets_core.secrets import Secret
 from typing import Dict, Any, Optional, Callable, Generic, T, Tuple
 
 

@@ -1,4 +1,2 @@
-from .secretdicts import ImmutableSecretMapping, MutableSecretMapping
-from .secrets import Secret
-
-__version__ = version = "0.1.4"
+from sosecrets_core.secrets import Secret
+from sosecrets.secretdicts import MutableSecretMapping, ImmutableSecretMapping

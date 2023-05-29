@@ -26,5 +26,6 @@ setup_kwargs = {
     'package_data': package_data,
     'python_requires': '>=3.8,<4.0',
 }
-from src.sosecrets.build import *
-build(setup_kwargs)
+from src.sosecrets.build import poetry_build
+print("Ok `poetry_build` loaded")
+poetry_build(setup_kwargs)
