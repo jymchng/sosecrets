@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sosecrets"
-version = "0.1.8"
+version = "0.1.9"
 description = "Simple wrapper to secure your secrets."
 authors = ["Jim Chng <jimchng@outlook.com>"]
 license = "MIT"
@@ -27,7 +27,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.bumpver]
-current_version = "0.1.8"
+current_version = "0.1.9"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
