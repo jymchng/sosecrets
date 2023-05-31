@@ -10,7 +10,7 @@ include = ["src/sosecrets/py.typed", "src/sosecrets/secrets.pyi"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-sosecrets-core = "^1.0.4"
+sosecrets-core = "1.0.20"
 
 
 [tool.poetry.group.dev.dependencies]

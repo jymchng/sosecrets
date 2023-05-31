@@ -237,31 +237,14 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
-name = "setuptools"
-version = "67.8.0"
-description = "Easily download, build, install, upgrade, and uninstall Python packages"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "setuptools-67.8.0-py3-none-any.whl", hash = "sha256:5df61bf30bb10c6f756eb19e7c9f3b473051f48db77fddbe06ff2ca307df9a6f"},
-    {file = "setuptools-67.8.0.tar.gz", hash = "sha256:62642358adc77ffa87233bc4d2354c4b2682d214048f500964dbe760ccedf102"},
-]
-
-[package.extras]
-docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-hoverxref (<2)", "sphinx-inline-tabs", "sphinx-lint", "sphinx-notfound-page (==0.8.3)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
-testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8-2020", "ini2toml[lite] (>=0.9)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pip (>=19.1)", "pip-run (>=8.8)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-mypy (>=0.9.1)", "pytest-perf", "pytest-ruff", "pytest-timeout", "pytest-xdist", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
-testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
-
-[[package]]
 name = "sosecrets-core"
-version = "1.0.4"
+version = "1.0.16"
 description = "Simple Secret Primitive for Python"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sosecrets_core-1.0.4.tar.gz", hash = "sha256:3744ce4293aab0c18b81a8249eb1e54009faf208cc1f15045f6da58078270bd1"},
+    {file = "sosecrets_core-1.0.16.tar.gz", hash = "sha256:b38561d119fd8062fd1d8ad783b782c8ad370adf1255139bc4dff2f1430cf8c6"},
 ]
 
 [[package]]
@@ -279,4 +262,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "387e83694fe50585b49b62b0f977adaa19621802222fd54ff1b84cb716d42397"
+content-hash = "e38ae52793746b4956ddc88981c0e9f760ea02dc3edd170e892ab1a238587586"

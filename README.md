@@ -79,7 +79,7 @@ The example code does the following:
 4. Prints the exposed dictionary of the `ImmutableSecretMapping` object using the `expose_dict()` method.
 5. Prints the `ImmutableSecretMapping` object itself.
 6. Gets a value from the `ImmutableSecretMapping` object using the `get()` method and prints it.
-7. Gets the exposed value of a key using the `get_exposed()` method## The Output
+7. Gets the exposed value of a key using the `get_exposed()` method
 
 ### MutableSecretMapping
 
@@ -99,7 +99,7 @@ Handling personal identifiable information (PII): sosecrets can be used to prote
 The `Secret` class encapsulates a secret value and only exposes it through a controlled interface.
 
 ```
-Secret(value: Optional[T] = None, func: Optional[Callable[[Any], T]] = None, func_args: Tuple[Any] = tuple(), func_kwargs: Dict[str, Any] = dict()) -> SecretType
+Secret(value: Optional[T] = None, func: Optional[Callable[..., T]] = None, func_args: Tuple[Any, ...] = tuple(), func_kwargs: Dict[str, Any] = dict()) -> Secret
 ```
 
 - `value`: The secret value to encapsulate.
