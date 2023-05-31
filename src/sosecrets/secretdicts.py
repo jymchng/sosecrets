@@ -88,7 +88,9 @@ class ImmutableSecretMapping(dict, Mapping[Any, Secret]):
         """
         Return a new dictionary that exposes exposed information.
 
-        This method returns a new dictionary with the same keys as the original dictionary, but with values that have been converted to exposed information using their `expose_secret()` method. The `expose_secret()` method is expected to return a exposed version of the value, so that the dictionary can be safely exported or displayed without exposing sensitive information.
+        This method returns a new dictionary with the same keys as the original dictionary,
+        but with values that have been converted to exposed information using their `expose_secret()` method.
+        The `expose_secret()` method is expected to return a exposed version of the value.
 
         Returns:
             Dict[Any, Any]: A new dictionary with exposed values.
@@ -180,10 +182,11 @@ class MutableSecretMapping(dict, Mapping[Any, Secret]):
 
     def expose_dict(self) -> Dict[Any, Any]:
         """
-        Return a new dictionary that exposes information.
+        Return a new dictionary that exposes exposed information.
 
-        This method returns a new dictionary with the same keys as the original dictionary, 
+        This method returns a new dictionary with the same keys as the original dictionary,
         but with values that have been converted to exposed information using their `expose_secret()` method.
+        The `expose_secret()` method is expected to return a exposed version of the value.
 
         Returns:
             Dict[Any, Any]: A new dictionary with exposed values.
