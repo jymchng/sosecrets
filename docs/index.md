@@ -12,16 +12,6 @@ Here are some reasons to use sosecrets in your Python projects:
 
 * Encapsulation of secret values: With sosecrets, you can encapsulate secret values in a way that prevents accidental exposure. This means that even if a developer accidentally logs or returns the secret value, it will not be visible to an attacker.
 
-* Controlled access to secrets: With sosecrets, you can control access to secret values by defining a method that exposes the secret value only to authorized code. This ensures that secrets are not accidentally exposed to unauthorized code.
-
-* Easy to use: Sosecrets is easy to use and integrates well with your existing Python code. It uses Python's built-in type annotations to define secret values, making it easy to understand and use.
-
-* Flexible: Sosecrets is flexible and can be used in a variety of scenarios. It can be used to manage secrets in web applications, command-line tools, or any other Python project that requires secure management of secrets.
-
-* Prevents inheritance: Sosecrets prevents inheritance of its Secret class, ensuring that secrets cannot be accidentally exposed by a subclass. This helps to prevent security vulnerabilities and ensures that secrets are properly managed.
-
-* Built-in exceptions: Sosecrets provides built-in exceptions that can be used to handle common errors when working with secrets. This can help to reduce coding errors and improve the overall security of your code.
-
 * Testable: Sosecrets is testable and integrates well with Python testing frameworks. You can easily write tests to ensure that your secrets are properly managed and not accidentally exposed.
 
 * Open source: Sosecrets is an open-source library, meaning that the code is available for inspection and can be audited for security vulnerabilities. This provides an extra layer of security and ensures that the library is trustworthy.

@@ -1,6 +1,10 @@
 # Example of Using ImmutableSecretMapping to Manage Environment Variables Safely
 
-In this example, we demonstrate how to use the `ImmutableSecretMapping` class from the `sosecrets` module to manage environment variables safely. We use the `dotenv` package to load environment variables from a file and then store them in an instance of `ImmutableSecretMapping`. We then demonstrate how to access and expose the non-sensitive values of the environment variables.
+In this example, we demonstrate how to use the `ImmutableSecretMapping` class from the `sosecrets` module to manage environment variables safely.
+
+We use the `dotenv` package to load environment variables from a file and then store them in an instance of `ImmutableSecretMapping`.
+
+We then demonstrate how to access the secret values of the environment variables.
 
 ## The Code
 
@@ -64,10 +68,26 @@ exposed_dict: {
     'value13': 'fa19468f8a72eb7aa871ea7e78e1960b',
     'value14': '277103129cbf6050b7cbd6502eca9810'
 }
-secret_env_dict:  {'value0': < src.sosecrets.secrets.Secret object at 0x000001245A3D3250 > , 'value1': < src.sosecrets.secrets.Secret object at 0x000001245A853FD0 > , 'value2': < src.sosecrets.secrets.Secret object at 0x000001245A851DB0 > , 'value3': < src.sosecrets.secrets.Secret object at 0x000001245A851E10 >, 'value4': <src.sosecrets.secrets.Secret object at 0x000001245AB24460>, 'value5': <src.sosecrets.secrets.Secret object at 0x000001245AB24760>, 'value6': <src.sosecrets.secrets.Secret object at 0x000001245AB24700>, 'value7': <src.sosecrets.secrets.Secret object at 0x000001245AB24850>, 'value8': 
-< src.sosecrets.secrets.Secret object at 0x000001245AB248B0 > , 'value9': < src.sosecrets.secrets.Secret object at 0x000001245AB24820 > , 'value10': < src.sosecrets.secrets.Secret object at 0x000001245AB24940 > , 'value11': < src.sosecrets.secrets.Secret object at 0x000001245AB247C0 >, 'value12': <src.sosecrets.secrets.Secret object at 0x000001245AB249A0>, 'value13': <src.sosecrets.secrets.Secret object at 0x000001245AB24A30>, 'value14': <src.sosecrets.secrets.Secret object at 0x000001245AB24AC0>}
-value0: < src.sosecrets.secrets.Secret object at 0x000001245A3D3250 >
-value1: 8f7047cda0532a374dbc380edad96c25
+
+secret_env_dict =  {'value0': <secrets.Secret object at 0x000002210A017540>, 
+                    'value1': <secrets.Secret object at 0x000002210A017580>, 
+                    'value2': <secrets.Secret object at 0x000002210A0175C0>, 
+                    'value3': <secrets.Secret object at 0x000002210A017600>,
+                    'value4': <secrets.Secret object at 0x000002210A017640>, 
+                    'value5': <secrets.Secret object at 0x000002210A017680>, 
+                    'value6': <secrets.Secret object at 0x000002210A0176C0>,
+                    'value7': <secrets.Secret object at 0x000002210A017700>, 
+                    'value8': <secrets.Secret object at 0x000002210A017740>, 
+                    'value9': <secrets.Secret object at 0x000002210A017780>, 
+                    'value10': <secrets.Secret object at 0x000002210A0177C0>,
+                    'value11': <secrets.Secret object at 0x000002210A017800>,
+                    'value12': <secrets.Secret object at 0x000002210A017840>,
+                    'value13': <secrets.Secret object at 0x000002210A017880>,
+                    'value14': <secrets.Secret object at 0x000002210A0178C0>}
+
+value0 = <secrets.Secret object at 0x000002210A017540>
+
+value1 = 8f7047cda0532a374dbc380edad96c25
 ```
 
 ## Discussion

@@ -71,6 +71,23 @@ value1 = secret_env_dict.get_exposed('value1')
 print("value1: ", value1)
 ```
 
+The output of the above codes is shown below:
+```
+exposed_dict = {
+    'value0': '3c976b3c66a2aa1d440d3ad99a9653c7',
+    'value1': '8f7047cda0532a374dbc380edad96c25',
+...
+    'value14': '277103129cbf6050b7cbd6502eca9810'}
+
+secret_env_dict =  {'value0': <secrets.Secret object at 0x000002210A017540>, 
+                    'value1': <secrets.Secret object at 0x000002210A017580>, 
+                    ...
+                    'value14': <secrets.Secret object at 0x000002210A0178C0>}
+
+value0 = <secrets.Secret object at 0x000002210A017540>
+value1 = 8f7047cda0532a374dbc380edad96c25
+```
+
 The example code does the following:
 
 1. Imports the necessary packages: `Path` from `pathlib`, `src` from the `sosecrets` module, `ImmutableSecretMapping` from `secretdicts` in the `sosecrets` module, and `dotenv_values` from the `dotenv` package.

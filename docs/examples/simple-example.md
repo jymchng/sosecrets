@@ -1,6 +1,6 @@
 ## Examples
 
-Here are some examples of how to use `sosecrets`:
+Here is a simple example of how to use `sosecrets`:
 
 ### Creating a secret value
 
@@ -16,7 +16,7 @@ secret_value = Secret("my secret value")
 ```python
 # Use the secret value while keeping it encapsulated
 result = secret_value.apply(len)
-print(result)  # Output: 14
+print(result.expose_secret())  # Output: 14
 ```
 
 ### Retrieving the secret value
