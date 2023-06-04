@@ -1,5 +1,7 @@
 # sosecrets
 
+![https://img.shields.io/github/commit-activity/t/jymchng/sosecrets](https://img.shields.io/github/commit-activity/t/jymchng/sosecrets) ![https://img.shields.io/github/actions/workflow/status/jymchng/sosecrets/testing.yml](https://img.shields.io/github/actions/workflow/status/jymchng/sosecrets/testing.yml) ![https://img.shields.io/pypi/pyversions/sosecrets](https://img.shields.io/pypi/pyversions/sosecrets) ![https://img.shields.io/pypi/dm/sosecrets](https://img.shields.io/pypi/dm/sosecrets) ![https://img.shields.io/github/issues/jymchng/sosecrets](https://img.shields.io/github/issues/jymchng/sosecrets) ![https://img.shields.io/github/issues-pr/jymchng/sosecrets](https://img.shields.io/github/issues-pr/jymchng/sosecrets)
+
 `sosecrets` is a Python module that provides a secure way to handle sensitive data by encapsulating it and only exposing it through a controlled interface.
 
 Version: 0.1.11

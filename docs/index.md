@@ -1,8 +1,25 @@
 ## sosecrets
 
+![https://img.shields.io/github/commit-activity/t/jymchng/sosecrets](https://img.shields.io/github/commit-activity/t/jymchng/sosecrets) ![https://img.shields.io/github/actions/workflow/status/jymchng/sosecrets/testing.yml](https://img.shields.io/github/actions/workflow/status/jymchng/sosecrets/testing.yml) ![https://img.shields.io/pypi/pyversions/sosecrets](https://img.shields.io/pypi/pyversions/sosecrets) ![https://img.shields.io/pypi/dm/sosecrets](https://img.shields.io/pypi/dm/sosecrets) ![https://img.shields.io/github/issues/jymchng/sosecrets](https://img.shields.io/github/issues/jymchng/sosecrets) ![https://img.shields.io/github/issues-pr/jymchng/sosecrets](https://img.shields.io/github/issues-pr/jymchng/sosecrets)
+
 `sosecrets` is a Python module that provides a secure way to handle sensitive data by encapsulating it and only exposing it through a controlled interface. It is designed to be used in scenarios where sensitive data needs to be securely handled and kept confidential.
 
 This module provides a `Secret` class that encapsulates a secret value and only exposes it through a controlled interface. It also provides a number of related classes and exceptions to support this functionality.
+
+```python
+from sosecrets import Secret
+
+# Create a secret value
+secret_value = Secret("my secret value")
+
+# Use the secret value while keeping it encapsulated
+result = secret_value.apply(len)
+print(result.expose_secret())  # Output: 14
+
+# Get the value of the secret
+value = secret_value.expose_secret()
+print(value)  # Output: "my secret value"
+```
 
 ### Why use `sosecrets`
 
