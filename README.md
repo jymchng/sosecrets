@@ -131,7 +131,7 @@ Secret(value: Optional[T] = None, func: Optional[Callable[..., T]] = None, func_
 The `apply` method applies a function to the secret value while keeping it encapsulated.
 
 ```python
-apply(self, func: Callable[[Any], Any], *args: Tuple[Any], **kwargs: Dict[str, Any]) -> SecretType:
+apply(self, func: Callable[..., Any], *args: Tuple[Any, ...], **kwargs: Dict[str, Any]) -> SecretType
 ```
 
 - `func`: The function to apply to the secret value.
@@ -143,7 +143,7 @@ apply(self, func: Callable[[Any], Any], *args: Tuple[Any], **kwargs: Dict[str, A
 The `expose_secret` method returns the value of the secret.
 
 ```python
-def expose_secret(self) -> T:
+expose_secret(self) -> T
 ```
 
 ## Contributing

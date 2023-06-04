@@ -1,30 +1,30 @@
+from collections import UserDict
 from sosecrets_core.secrets import Secret
 from typing import Dict, Any, Optional, Callable, Tuple, Mapping
 
 
-class ImmutableSecretMapping(dict, Mapping[Any, Secret]):
+class ImmutableSecretMapping(UserDict, Mapping[Any, Secret]):
     """
     A dictionary-like object that stores secret values and prevents changes to the dictionary.
     """
-    def __new__(cls, mapping: Dict[Any, Any]) -> 'ImmutableSecretMapping':
+    _frozen = False
+    
+    def __init__(self, dict=None, /, **kwargs):
         """
-        Initialize a new ImmutableSecretMapping object.
+        Initialize a new `ImmutableSecretMapping` object.
 
         Args:
             mapping (Dict[Any, Any]): A dictionary with `Any` keys and `Any` values.
-
-        Raises:
-            ValueError: If the mapping argument is empty.
         """
-        if not mapping:
-            raise ValueError("Mapping argument is empty.")
-        new_mapping: Dict[Any, Any] = {}
-        for k, v in mapping.items():
+        if dict is None or dict == {}:
+            raise ValueError("Cannot initialize `ImmutableSecretMapping` with an empty dictionary")
+        super().__init__(dict, **kwargs)
+        for k, v in self.data.items():
             if not isinstance(v, Secret):
-                new_mapping[k] = Secret(v)
+                self.data[k] = Secret(v)
             else:
-                new_mapping[k] = v
-        return super().__new__(cls, new_mapping)
+                self.data[k] = v
+        self._frozen = True
 
     def __setitem__(self, key: Any, value: Any) -> None:
         """
@@ -37,8 +37,10 @@ class ImmutableSecretMapping(dict, Mapping[Any, Secret]):
         Raises:
             TypeError: When attempting to set a new key-value pair.
         """
-        raise TypeError(
-            "ImmutableSecretMapping object does not support item assignment.")
+        if self._frozen:
+            raise TypeError(
+                "ImmutableSecretMapping object does not support item assignment.")
+        super().__setitem__(key, value)
 
     @classmethod
     def from_func(
@@ -79,7 +81,7 @@ class ImmutableSecretMapping(dict, Mapping[Any, Secret]):
 
         Returns:
             Any: The exposed value of the key, or the default value if the key is not found."""
-        value: Secret = super().get(key, default)
+        value: Secret = self.data.get(key, default)
         if value == default:
             return value
         return value.expose_secret()
@@ -95,29 +97,29 @@ class ImmutableSecretMapping(dict, Mapping[Any, Secret]):
         Returns:
             Dict[Any, Any]: A new dictionary with exposed values.
         """
-        return {k: v.expose_secret() for k, v in super().items()}
+        return {k: v.expose_secret() for k, v in self.data.items()}
 
 
-class MutableSecretMapping(dict, Mapping[Any, Secret]):
+class MutableSecretMapping(UserDict, Mapping[Any, Secret]):
     """
     A dictionary-like object that stores secret values and allows changes to the dictionary.
     """
-    def __new__(cls, mapping: Dict[Any, Any]):
+    _unset = True
+    
+    def __init__(self, dict=None, /, **kwargs):
         """
-        Initialize a new MutableSecretMapping object.
+        Initialize a new `MutableSecretMapping` object.
 
         Args:
             mapping (Dict[Any, Any]): A dictionary with `Any` keys and `Any` values.
         """
-        if not mapping:
-            return super().__new__(cls, mapping)
-        new_mapping = {}
-        for k, v in mapping.items():
+        super().__init__(dict, **kwargs)
+        for k, v in self.data.items():
             if not isinstance(v, Secret):
-                new_mapping[k] = Secret(v)
+                self.data[k] = Secret(v)
             else:
-                new_mapping[k] = v
-        return super().__new__(cls, new_mapping)
+                self.data[k] = v
+        self._unset = False
 
     def __setitem__(self, key: Any, value: Any) -> None:
         """
@@ -130,9 +132,14 @@ class MutableSecretMapping(dict, Mapping[Any, Secret]):
         Raises:
             ValueError: If the value is not of type `Secret`.
         """
+        if self._unset:
+            if not isinstance(value, Secret):
+                value = Secret(value)
+            super().__setitem__(key, value)
         if not isinstance(value, Secret):
             raise ValueError("Value must be of type `Secret`.")
         super().__setitem__(key, value)
+        
 
     @classmethod
     def from_func(
